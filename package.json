@@ -34,7 +34,6 @@
   "devDependencies": {
     "ava": "^0.17.0",
     "benchmark": "^2.1.3",
-    "commentator": "^1.0.0",
     "cz-conventional-changelog": "^1.2.0",
     "semantic-release": "^6.3.2",
     "typescript": "^2.1.5",

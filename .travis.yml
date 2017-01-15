@@ -9,6 +9,7 @@ node_js:
   - '7'
 before_script:
   - npm prune
+  - yarn global add commentator
   - npm run benchmark | commentator
 after_success:
   - npm run semantic-release

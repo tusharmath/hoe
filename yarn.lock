@@ -1102,12 +1102,6 @@ commander@^2.9.0:
   dependencies:
     graceful-readlink ">= 1.0.0"
 
-commentator@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/commentator/-/commentator-1.0.0.tgz#8c148cfff9fc09acaf6251b5eb14a84c46156b80"
-  dependencies:
-    request-promise "^4.1.1"
-
 common-path-prefix@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/common-path-prefix/-/common-path-prefix-1.0.0.tgz#cd52f6f0712e0baab97d6f9732874f22f47752c0"
