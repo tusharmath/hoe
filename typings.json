@@ -1,0 +1,6 @@
+{
+  "name": "hoe",
+  "dependencies": {
+    "benchmark": "registry:dt/benchmark#1.0.0+20160428043022"
+  }
+}

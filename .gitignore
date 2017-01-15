@@ -51,7 +51,7 @@ jspm_packages
 
 .gitignore
 .idea/
-
+typings/
 *.js
 *.map
 *.d.ts
