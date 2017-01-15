@@ -8,7 +8,7 @@
  */
 export interface Emitter<T> {
   of <S> (type: string): Emitter<S>
-  emit (value: T): Emitter<T>
+  emit (value: T): void
 }
 
 /**
@@ -23,7 +23,7 @@ export interface Action<T> {
  * Handler for events
  */
 export interface Listener<T> {
-  (action: T, emitter: Emitter<T>): void
+  (action: T, emitter?: Emitter<T>): void
 }
 
 export const action = <T> (type: string, value: T): Action<T> => {
@@ -47,21 +47,20 @@ export class DefaultEmitter<T> implements Emitter<T> {
 
   emit (value: T) {
     this.parent.emit(action(this.type, value))
-    return this
   }
 }
 
 export class RootEmitter<T> implements Emitter<T> {
+
+  constructor (private listener: Listener<T>) {
+  }
+
   of <S> (type: string): Emitter<S> {
     return new DefaultEmitter(type, this as any)
   }
 
   emit (value: T) {
-    this.listener(value, this as any)
-    return this
-  }
-
-  constructor (private listener: Listener<T>) {
+    this.listener(value, this)
   }
 }
 
