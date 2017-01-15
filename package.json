@@ -7,7 +7,8 @@
     "prepublish": "tsc",
     "test": "ava",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "benchmark": "node bm/bm.hoe.js"
+    "benchmark": "node bm/bm.hoe.js",
+    "postinstall": "typings install"
   },
   "repository": {
     "type": "git",
@@ -36,7 +37,8 @@
     "commentator": "^1.0.0",
     "cz-conventional-changelog": "^1.2.0",
     "semantic-release": "^6.3.2",
-    "typescript": "^2.1.5"
+    "typescript": "^2.1.5",
+    "typings": "^2.1.0"
   },
   "config": {
     "commitizen": {
