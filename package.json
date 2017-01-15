@@ -1,0 +1,43 @@
+{
+  "name": "hoe",
+  "version": "0.0.0-development",
+  "description": "Higher order event emitter",
+  "main": "hoe.js",
+  "scripts": {
+    "prepublish": "tsc",
+    "test": "ava",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tusharmath/hoe.git"
+  },
+  "keywords": [
+    "higher",
+    "order",
+    "event",
+    "emitter",
+    "action",
+    "type",
+    "value",
+    "dispatch",
+    "listen"
+  ],
+  "author": "Tushar Mathur <tusharmath@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tusharmath/hoe/issues"
+  },
+  "homepage": "https://github.com/tusharmath/hoe#readme",
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "cz-conventional-changelog": "^1.2.0",
+    "semantic-release": "^6.3.2",
+    "typescript": "^2.1.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
