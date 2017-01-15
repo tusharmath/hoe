@@ -52,3 +52,7 @@ jspm_packages
 .gitignore
 .idea/
 package.json
+
+*.js
+*.map
+*.d.ts
