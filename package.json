@@ -8,7 +8,7 @@
     "test": "ava",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "benchmark": "node bm/bm.hoe.js",
-    "postinstall": "typings install"
+    "preinstall": "typings install"
   },
   "repository": {
     "type": "git",

@@ -7,9 +7,10 @@ notifications:
   email: false
 node_js:
   - '7'
+before_install:
+  - yarn global add commentator
 before_script:
   - npm prune
-  - yarn global add commentator
   - npm run benchmark | commentator
 after_success:
   - npm run semantic-release
