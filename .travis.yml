@@ -7,8 +7,12 @@ notifications:
   email: false
 node_js:
   - '7'
+before_install:
+  - npm i -g commentator typings
+  - typings install
 before_script:
   - npm prune
+  - npm run benchmark | commentator
 after_success:
   - npm run semantic-release
 branches:
