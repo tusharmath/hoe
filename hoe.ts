@@ -29,7 +29,6 @@ export class Action<T> {
  */
 export interface Listener<T> {
   (action: T, emitter: Emitter): void
-  (action: T): void
 }
 
 
