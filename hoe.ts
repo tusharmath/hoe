@@ -59,11 +59,11 @@ export class RootEmitter<T> implements Emitter<T> {
     return new DefaultEmitter(type, this as any)
   }
 
-  emit (value: T) {
+  emit = (value: T) => {
     this.listener(value, this)
   }
 }
 
-export const hoe = <T> (listener: Listener<T>) => {
+export const hoe = <T> (listener: Listener<T>): Emitter<T> => {
   return new RootEmitter(listener)
 }
