@@ -9,12 +9,13 @@ A typesafe higher order event emitter.
 ```bash
 yarn add hoe 
 ```
+
 *use yarn, because its simply better :)*
 
 
 ## Usage
 
-```ecmascript 6
+```js
 import {hoe} from 'hoe'
 
 // Create emitter
@@ -33,7 +34,7 @@ e.emit(20)
 
 ## Higher Order Event Emitter
 
-```ts
+```js
 const e = hoe((ev) => {
   console.log(ev)
 })
