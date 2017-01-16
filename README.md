@@ -18,8 +18,13 @@ yarn add hoe
 ```js
 import {hoe} from 'hoe'
 
+// Create event listener first
+const listener = (ev) => {
+  console.log(ev)
+}
+
 // Create emitter
-const e = hoe((ev) => console.log(ev))
+const e = hoe(listener) 
 
 e.emit(10) 
 e.emit(20)
