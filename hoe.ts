@@ -43,7 +43,7 @@ export class DefaultEmitter<T> implements Emitter {
     return new DefaultEmitter(type, this)
   }
 
-  emit (value: T) {
+  emit = (value: T) => {
     this.parent.emit(new Action(this.type, value))
   }
 }
