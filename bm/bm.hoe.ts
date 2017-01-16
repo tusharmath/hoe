@@ -10,15 +10,19 @@ function passthru () {
 }
 console.log('```')
 suite
-  .add('emit-once', function () {
-    hoe(passthru).emit(0)
+  .add('emit-1e6-times', function () {
+    const e = hoe(passthru)
+    for (var i = 0; i < 1e6; ++i) {
+      e.emit(i)
+    }
   })
 
-  .add('create-1000-times', function () {
+  .add('create-1e3-times', function () {
     var e = hoe(passthru)
     for (var i = 0; i < 1e3; ++i) {
-      e.of(i.toString())
+      e = e.of(i.toString())
     }
+    e.emit(0)
   })
 
   .on('cycle', function (event: any) {

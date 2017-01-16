@@ -30,3 +30,10 @@ test('scope', t => {
     action('T', 200)
   ])
 })
+
+test('emit.bind()', t => {
+  const {actions, listener} = testListener()
+  const e = hoe(listener)
+  e.emit.call(null, 100)
+  t.deepEqual(actions, [100])
+})
