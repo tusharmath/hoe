@@ -2,18 +2,7 @@
  * Created by tushar on 15/01/17.
  */
 
-export type OPT = {
-  cache: boolean
-}
-
-/**
- * Emitter can dispatch values of only one type. It could be a DOM Event or an action or a number doesn't matter,
- * the type can not be changed at run time.
- */
-export interface Emitter {
-  of (type: string): Emitter
-  emit <T> (value: T): void
-}
+///<reference path="global.d.ts"/>
 
 /**
  * Actions are essentially a tuple of value + type.
@@ -26,13 +15,6 @@ export class Action<T> {
   static of <T> (type: string, value: T) {
     return new Action(type, value)
   }
-}
-
-/**
- * Handler for events
- */
-export interface Listener {
-  (action: any, emitter: Emitter): void
 }
 
 export class Cache {
