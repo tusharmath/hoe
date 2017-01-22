@@ -2,6 +2,10 @@
  * Created by tushar on 15/01/17.
  */
 
+export type OPT = {
+  cache: boolean
+}
+
 /**
  * Emitter can dispatch values of only one type. It could be a DOM Event or an action or a number doesn't matter,
  * the type can not be changed at run time.
@@ -27,41 +31,65 @@ export class Action<T> {
 /**
  * Handler for events
  */
-export interface Listener<T> {
-  (action: T, emitter: Emitter): void
+export interface Listener {
+  (action: any, emitter: Emitter): void
 }
 
+export class Cache {
+  private cache: {[n: string]: Emitter} = {}
 
-/**
- * Dispatches values of type [T]
- */
-export class DefaultEmitter<T> implements Emitter {
-  constructor (private type: string, private parent: Emitter) {
+  has (type: string) {
+    return Boolean(this.cache[type])
+  }
+
+  get (type: string) {
+    return this.cache[type]
+  }
+
+  set (type: string, e: Emitter) {
+    this.cache[type] = e
+    return e
+  }
+}
+
+export const resolveEmitter = (opt: OPT, type: string, cache: Cache, emitter: Emitter) => {
+  if (opt.cache === false) return new DefaultEmitter(type, emitter, opt)
+  if (cache.has(type)) return cache.get(type)
+  return cache.set(type, new DefaultEmitter(type, emitter, opt))
+}
+
+export class DefaultEmitter implements Emitter {
+  private cache = new Cache()
+
+  constructor (private type: string,
+               private parent: Emitter,
+               private opt: OPT) {
   }
 
   of (type: string): Emitter {
-    return new DefaultEmitter(type, this)
+    return resolveEmitter(this.opt, type, this.cache, this)
   }
 
-  emit = (value: T) => {
-    this.parent.emit(new Action(this.type, value))
+  emit = <T> (value: T) => {
+    return this.parent.emit(new Action(this.type, value))
   }
 }
 
-export class RootEmitter<T> implements Emitter {
+export class RootEmitter implements Emitter {
+  private cache = new Cache()
 
-  constructor (private listener: Listener<T>) {
+  constructor (private listener: Listener, private opt: OPT) {
   }
 
   of (type: string): Emitter {
-    return new DefaultEmitter(type, this)
+    return resolveEmitter(this.opt, type, this.cache, this)
   }
 
-  emit = (value: T) => {
-    this.listener(value, this)
+  emit = <T> (value: T) => {
+    return this.listener(value, this)
   }
 }
 
-export const hoe = <T> (listener: Listener<T>): Emitter => {
-  return new RootEmitter(listener)
+export const hoe = (listener: Listener, opt: OPT = {cache: false}): Emitter => {
+  return new RootEmitter(listener, opt)
 }

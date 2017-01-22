@@ -42,3 +42,17 @@ test('emit.bind()', t => {
     Action.of('F', 200)
   ])
 })
+
+test('cache: true', t => {
+  const {listener} = testListener()
+  const e = hoe(listener, {cache: true})
+  t.is(e.of('A'), e.of('A'))
+  t.is(e.of('A').of('B'), e.of('A').of('B'))
+})
+
+test('cache: false', t => {
+  const {listener} = testListener()
+  const e = hoe(listener)
+  t.false(e.of('A') === e.of('A'))
+  t.false(e.of('A').of('B') === e.of('A').of('B'))
+})
