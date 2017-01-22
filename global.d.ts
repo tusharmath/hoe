@@ -15,13 +15,13 @@ type OPT = {
  */
 interface Emitter {
   of (type: string): Emitter
-  emit <T> (value: T): void
+  emit: EmitFunction
 }
 
 /**
  * Handler for events
  */
-interface Listener {
-  (action: any, emitter: Emitter): void
+interface EmitFunction {
+  <T> (action: T): void
 }
 

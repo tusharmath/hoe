@@ -60,18 +60,14 @@ export class DefaultEmitter implements Emitter {
 export class RootEmitter implements Emitter {
   private cache = new Cache()
 
-  constructor (private listener: Listener, private opt: OPT) {
+  constructor (public readonly emit: EmitFunction, private opt: OPT) {
   }
 
   of (type: string): Emitter {
     return resolveEmitter(this.opt, type, this.cache, this)
   }
-
-  emit = <T> (value: T) => {
-    return this.listener(value, this)
-  }
 }
 
-export const hoe = (listener: Listener, opt: OPT = {cache: false}): Emitter => {
+export const hoe = (listener: EmitFunction, opt: OPT = {cache: false}): Emitter => {
   return new RootEmitter(listener, opt)
 }
