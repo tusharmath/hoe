@@ -35,16 +35,6 @@ export interface Listener<T> {
   (action: T, emitter: Emitter): void
 }
 
-export const cache = (fn: (t: string) => Emitter) => {
-  const cache = new Map<string, Emitter>()
-  return function (key: string) {
-    if (cache.has(key)) return cache.get(key)
-    const d = fn.call(this, key)
-    cache.set(key, d)
-    return d
-  }
-}
-
 export abstract class CachableEmitter implements Emitter {
   private cache = new Map<string, Emitter>()
 
