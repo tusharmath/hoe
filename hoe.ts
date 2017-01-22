@@ -31,54 +31,65 @@ export class Action<T> {
 /**
  * Handler for events
  */
-export interface Listener<T> {
-  (action: T, emitter: Emitter): void
+export interface Listener {
+  (action: any, emitter: Emitter): void
 }
 
-export abstract class CachableEmitter implements Emitter {
-  private cache = new Map<string, Emitter>()
+export class Cache {
+  private cache: {[n: string]: Emitter} = {}
 
-  constructor (private opt: OPT) {
+  has (type: string) {
+    return Boolean(this.cache[type])
   }
 
-  private create (type: string) {
-    return new DefaultEmitter(type, this, this.opt)
+  get (type: string) {
+    return this.cache[type]
+  }
+
+  set (type: string, e: Emitter) {
+    this.cache[type] = e
+    return e
+  }
+}
+
+export const resolveEmitter = (opt: OPT, type: string, cache: Cache, emitter: Emitter) => {
+  if (opt.cache === false) return new DefaultEmitter(type, emitter, opt)
+  if (cache.has(type)) return cache.get(type)
+  return cache.set(type, new DefaultEmitter(type, emitter, opt))
+}
+
+export class DefaultEmitter implements Emitter {
+  private cache = new Cache()
+
+  constructor (private type: string,
+               private parent: Emitter,
+               private opt: OPT) {
   }
 
   of (type: string): Emitter {
-    if (this.opt.cache === false) return this.create(type)
-    if (this.cache.has(type)) return this.cache.get(type)
-    const d = this.create(type)
-    this.cache.set(type, d)
-    return d
+    return resolveEmitter(this.opt, type, this.cache, this)
   }
 
-  public emit: {<T> (t: T): void}
-}
-
-/**
- * Dispatches values of type [T]
- */
-export class DefaultEmitter<T> extends CachableEmitter {
-  constructor (private type: string, private parent: Emitter, opt: OPT) {
-    super(opt)
-  }
-
-  emit = (value: T) => {
+  emit = <T> (value: T) => {
     return this.parent.emit(new Action(this.type, value))
   }
 }
 
-export class RootEmitter<T> extends CachableEmitter {
-  constructor (private listener: Listener<T>, opt: OPT) {
-    super(opt)
+export class RootEmitter implements Emitter {
+  private cache = new Cache()
+
+  constructor (private listener: Listener, private opt: OPT) {
   }
 
-  emit = (value: T) => {
+  of (type: string): Emitter {
+    return resolveEmitter(this.opt, type, this.cache, this)
+  }
+
+  emit = <T> (value: T) => {
     return this.listener(value, this)
   }
 }
 
-export const hoe = <T> (listener: Listener<T>, opt: OPT = {cache: false}): Emitter => {
+export const hoe = (listener: Listener, opt: OPT = {cache: false}): Emitter => {
   return new RootEmitter(listener, opt)
 }
