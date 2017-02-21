@@ -6,6 +6,7 @@
   "scripts": {
     "prepublish": "tsc",
     "test": "ava",
+    "test:watch": "ava --watch",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "benchmark": "node bm/bm.hoe.js"
   },
