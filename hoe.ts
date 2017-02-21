@@ -2,7 +2,27 @@
  * Created by tushar on 15/01/17.
  */
 
-///<reference path="global.d.ts"/>
+
+export interface HoeOptions {
+  cache: boolean
+}
+
+/**
+ * Emitter can dispatch values of only one type. It could be a DOM Event or an action or a number doesn't matter,
+ * the type can not be changed at run time.
+ */
+export interface Emitter {
+  of (type: string): Emitter
+  emit: EmitFunction
+}
+
+/**
+ * Handler for events
+ */
+export interface EmitFunction {
+  <T> (action: T): void
+}
+
 
 /**
  * Actions are essentially a tuple of value + type.
@@ -34,7 +54,7 @@ export class Cache {
   }
 }
 
-export const resolveEmitter = (opt: OPT, type: string, cache: Cache, emitter: Emitter) => {
+export const resolveEmitter = (opt: HoeOptions, type: string, cache: Cache, emitter: Emitter) => {
   if (opt.cache === false) return new DefaultEmitter(type, emitter, opt)
   if (cache.has(type)) return cache.get(type)
   return cache.set(type, new DefaultEmitter(type, emitter, opt))
@@ -45,7 +65,7 @@ export class DefaultEmitter implements Emitter {
 
   constructor (private type: string,
                private parent: Emitter,
-               private opt: OPT) {
+               private opt: HoeOptions) {
   }
 
   of (type: string): Emitter {
@@ -60,7 +80,7 @@ export class DefaultEmitter implements Emitter {
 export class RootEmitter implements Emitter {
   private cache = new Cache()
 
-  constructor (public readonly emit: EmitFunction, private opt: OPT) {
+  constructor (public readonly emit: EmitFunction, private opt: HoeOptions) {
   }
 
   of (type: string): Emitter {
@@ -68,6 +88,6 @@ export class RootEmitter implements Emitter {
   }
 }
 
-export const hoe = (listener: EmitFunction, opt: OPT = {cache: false}): Emitter => {
+export const hoe = (listener: EmitFunction, opt: HoeOptions = {cache: false}): Emitter => {
   return new RootEmitter(listener, opt)
 }
