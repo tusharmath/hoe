@@ -2,7 +2,7 @@
  * Created by tushar on 15/01/17.
  */
 import test from 'ava'
-import {hoe, Action} from '../hoe'
+import {hoe, action} from '../hoe'
 
 export const testListener = () => {
   const actions: Array<any> = []
@@ -26,8 +26,8 @@ test('scope', t => {
   e.emit(100)
   e.emit(200)
   t.deepEqual(actions, [
-    Action.of('T', 100),
-    Action.of('T', 200)
+    action('T', 100),
+    action('T', 200)
   ])
 })
 
@@ -39,7 +39,7 @@ test('emit.bind()', t => {
   f.emit.call(null, 200)
   t.deepEqual(actions, [
     100,
-    Action.of('F', 200)
+    action('F', 200)
   ])
 })
 
