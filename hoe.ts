@@ -5,7 +5,7 @@
 ///<reference path="global.d.ts"/>
 
 
-class Action<T> implements Action<T> {
+class DefaultAction<T> implements Action<T> {
   constructor (public readonly type: string,
                public readonly value: T) {
   }
@@ -65,4 +65,4 @@ class RootEmitter implements Hoe {
 export const hoe = (listener: EmitFunction, opt: HoeOptions = {cache: false}): Hoe => {
   return new RootEmitter(listener, opt)
 }
-export const action = <T> (type: string, value: T) => new Action(type, value)
+export const action = <T> (type: string, value: T): Action<T> => new DefaultAction(type, value)
