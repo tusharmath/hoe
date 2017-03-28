@@ -12,19 +12,19 @@ class DefaultAction<T> implements Action<T> {
 }
 
 class Cache {
-  private cache: {[n: string]: Hoe} = {}
+  private cache = new Map()
 
-  has (type: string) {
-    return Boolean(this.cache[type])
+  has (key: string) {
+    return this.cache.has(key)
   }
 
-  get (type: string) {
-    return this.cache[type]
+  get (key: string) {
+    return this.cache.get(key)
   }
 
-  set (type: string, e: Hoe) {
-    this.cache[type] = e
-    return e
+  set (key: string, value: Hoe) {
+    this.cache.set(key, value)
+    return value
   }
 }
 
