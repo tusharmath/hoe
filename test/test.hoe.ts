@@ -43,20 +43,21 @@ test('emit.bind()', t => {
   ])
 })
 
-test('cache: true', t => {
-  const {listener, actions} = testListener()
-  const e = hoe(listener, {cache: true})
-  t.is(e.of('A'), e.of('A'))
-  t.is(e.of('A').of('B'), e.of('A').of('B'))
-  e.of('A').of('B').of('A').emit(0)
-  t.deepEqual(actions, [
-    action('A', action('B', action('A', 0)))
-  ])
-})
-
 test('cache: false', t => {
   const {listener} = testListener()
   const e = hoe(listener)
   t.false(e.of('A') === e.of('A'))
   t.false(e.of('A').of('B') === e.of('A').of('B'))
+})
+
+test('map()', t => {
+  const {actions, listener} = testListener()
+  const e = hoe(listener)
+  const f = e.of('A').of('B').map((x: number) => [x, 'K']).of('C')
+  f.emit(1)
+  f.emit(2)
+  t.deepEqual(actions, [
+    action('A', action('B', [action('C', 1), 'K'])),
+    action('A', action('B', [action('C', 2), 'K']))
+  ])
 })

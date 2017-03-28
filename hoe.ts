@@ -4,6 +4,9 @@
 
 ///<reference path="global.d.ts"/>
 
+interface MapFunction<A, B> {
+  (a: A): B
+}
 
 class DefaultAction<T> implements Action<T> {
   constructor (public readonly type: string,
@@ -11,58 +14,44 @@ class DefaultAction<T> implements Action<T> {
   }
 }
 
-class Cache {
-  private cache: {[n: string]: Hoe} = {}
-
-  has (type: string) {
-    return Boolean(this.cache[type])
-  }
-
-  get (type: string) {
-    return this.cache[type]
-  }
-
-  set (type: string, e: Hoe) {
-    this.cache[type] = e
-    return e
-  }
+const resolveEmitter = (fn: MapFunction<any, any>,
+                        parent: Hoe) => {
+  return new DefaultEmitter(fn, parent)
 }
 
-const resolveEmitter = (opt: HoeOptions, type: string, cache: Cache, emitter: Hoe) => {
-  if (opt.cache === false) return new DefaultEmitter(type, emitter, opt)
-  if (cache.has(type)) return cache.get(type)
-  return cache.set(type, new DefaultEmitter(type, emitter, opt))
-}
+const actionFrom = (type: string) => action.bind(null, type)
 
-class DefaultEmitter implements Hoe {
-  private cache = new Cache()
-
-  constructor (private type: string,
-               private parent: Hoe,
-               private opt: HoeOptions) {
-  }
-
+abstract class BaseEmitter implements Hoe {
   of (type: string): Hoe {
-    return resolveEmitter(this.opt, type, this.cache, this)
+    return this.map(actionFrom(type))
   }
 
-  emit = <T> (value: T) => {
-    return this.parent.emit(action(this.type, value))
+  map<A, B> (fn: MapFunction<A, B>): Hoe {
+    return resolveEmitter(fn, this)
+  }
+
+  abstract emit: EmitFunction
+}
+
+class DefaultEmitter extends BaseEmitter {
+  constructor (private fn: MapFunction<any, any>,
+               private parent: Hoe) {
+    super()
+  }
+
+  emit = <A> (value: A) => {
+    return this.parent.emit(this.fn(value))
   }
 }
 
-class RootEmitter implements Hoe {
-  private cache = new Cache()
-
-  constructor (public readonly emit: EmitFunction, private opt: HoeOptions) {
-  }
-
-  of (type: string): Hoe {
-    return resolveEmitter(this.opt, type, this.cache, this)
+class RootEmitter extends BaseEmitter {
+  constructor (public readonly emit: EmitFunction) {
+    super()
   }
 }
 
-export const hoe = (listener: EmitFunction, opt: HoeOptions = {cache: false}): Hoe => {
-  return new RootEmitter(listener, opt)
+export const hoe = (listener: EmitFunction): Hoe => {
+  return new RootEmitter(listener)
 }
+
 export const action = <T> (type: string, value: T): Action<T> => new DefaultAction(type, value)
