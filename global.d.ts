@@ -17,6 +17,7 @@ interface HoeOptions {
  */
 interface Hoe {
   of (type: string): Hoe
+  map <A, B>(fn: (a: A) => B): Hoe
   emit: EmitFunction
 }
 
@@ -26,7 +27,6 @@ interface Hoe {
 interface EmitFunction {
   <T> (action: T): void
 }
-
 
 /**
  * A tuple of value + type.
