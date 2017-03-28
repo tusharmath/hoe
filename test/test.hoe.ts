@@ -2,7 +2,7 @@
  * Created by tushar on 15/01/17.
  */
 import test from 'ava'
-import {hoe, action} from '../hoe'
+import {action, hoe} from '../hoe'
 
 export const testListener = () => {
   const actions: Array<any> = []
@@ -44,10 +44,14 @@ test('emit.bind()', t => {
 })
 
 test('cache: true', t => {
-  const {listener} = testListener()
+  const {listener, actions} = testListener()
   const e = hoe(listener, {cache: true})
   t.is(e.of('A'), e.of('A'))
   t.is(e.of('A').of('B'), e.of('A').of('B'))
+  e.of('A').of('B').of('A').emit(0)
+  t.deepEqual(actions, [
+    action('A', action('B', action('A', 0)))
+  ])
 })
 
 test('cache: false', t => {
