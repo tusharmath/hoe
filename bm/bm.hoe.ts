@@ -7,7 +7,6 @@ var suite = new Benchmark.Suite()
 
 function passthru () {
 }
-const memoized = hoe(passthru, {cache: true})
 const fresh = hoe(passthru)
 console.log('```')
 suite
@@ -20,14 +19,6 @@ suite
 
   .add('create-1e3-times', function () {
     var e = hoe(passthru)
-    for (var i = 0; i < 1e3; ++i) {
-      e = e.of(i.toString())
-    }
-    e.emit(0)
-  })
-
-  .add('create-1e3-times-memoized', function () {
-    var e = memoized
     for (var i = 0; i < 1e3; ++i) {
       e = e.of(i.toString())
     }
