@@ -19,8 +19,9 @@ suite
 
   .add('create-1e3-times', function () {
     var e = hoe(passthru)
+
     for (var i = 0; i < 1e3; ++i) {
-      e = e.of(i.toString())
+      e = e.of(x => [i, x])
     }
     e.emit(0)
   })
@@ -28,7 +29,7 @@ suite
   .add('create-1e3-times-fresh', function () {
     var e = fresh
     for (var i = 0; i < 1e3; ++i) {
-      e = e.of(i.toString())
+      e = e.of(x => [i, x])
     }
     e.emit(0)
   })
