@@ -2,59 +2,125 @@
 
 [![Build Status](https://travis-ci.org/tusharmath/hoe.svg?branch=master)](https://travis-ci.org/tusharmath/hoe)
 
-A typesafe higher order event emitter.
+<!--
+understands components
+-->
 
-## Installation
+HOE is an event emitter for nested events. A good use case for it is when you want to handle events in a typical web interface where components are deeply nested.
+
+ [react]:    https://facebook.github.io/react/docs/hello-world.html
+ [redux]:    http://redux.js.org/docs/introduction/
+ [reducers]: http://redux.js.org/docs/basics/Reducers.html
+
+# Table of Contents
+
+- [Installation](#installation)
+- [Example](#example)
+- [API](#api)
+
+# Installation
 
 ```bash
-yarn add hoe 
+$ npm install hoe --save
 ```
 
-*use yarn, because its simply better :)*
-
-
-## Usage
+# Example
 
 ```js
 import {hoe} from 'hoe'
 
-// Create event listener first
-const listener = (ev) => {
-  console.log(ev)
-}
+const H = hoe(event => console.log(event)) // Add a listener that logs
 
-// Create emitter
-const e = hoe(listener) 
-
-e.emit(10) 
-e.emit(20)
-
-/** 
-  * OUTPUT
-  * 10
-  * 20
-  */
-
-```
-
-## Higher Order Event Emitter
-
-```js
-const e = hoe((ev) => {
-  console.log(ev)
-})
-
-const t = e.of('T')
-const s = t.of('S')
-t.emit(10)
-t.emit(20)
-s.emit(30)
-s.emit(40)
+const a = H.of(x => ({type: 'A', value: x}))
+const b = a.of(x => ({type: 'B', value: x})) // created from 'a'
+const c = c.of(x => ({type: 'B', value: x})) // created from 'b'
 
 /**
- * {type: 'T', value: 10}
- * {type: 'T', value: 20}
- * {type: 'T', value: {type: 'S', value: 20}}
- * {type: 'T', value: {type: 'S', value: 20}}
+ * LOGS
+ * bananas
  */
+H.emit('bananas')
+
+/**
+ * LOGS
+ * {
+ *   type: 'A',
+ *   value: 'bananas'
+ * }
+ */
+a.emit('bananas')
+
+/**
+ * LOGS
+ * {
+ *   type: 'A',
+ *   value: {
+ *     type: 'B',
+ *     value: 'bananas'
+ *   }
+ * }
+ */
+b.emit('bananas')
+
+/**
+ * LOGS
+ * {
+ *   type: 'A',
+ *   value: {
+ *     type: 'B',
+ *     value: {
+ *       type: 'C',
+ *       value: 'bananas'
+ *     }
+ *   }
+ * }
+ */
+c.emit('bananas')
+```
+# API
+
+### function: hoe()
+
+This is the constructor function for creating the event emitter. It takes in a single listener and returns an instance an instance of `Hoe`.
+
+**Usage**
+```js
+import {hoe} from 'hoe'
+
+const listener = (event) => {
+  // do something with that event
+}
+
+hoe(listener) // returns a Hoe
+```
+
+### of()
+
+`of()` function is constructor function and is available on all `hoe` instances. It takes in a `transformer` function and returns a new instance of `Hoe`.
+ The `transformer` function is called with the value that is being emitted by the new instance. For Eg:
+
+ ```js
+const h0 = hoe(listener)
+
+const increment = x => x + 1
+const h1 = h0.of(increment)
+
+h1.emit(9)
+```
+
+In the above case initially `h0` is created. If `emit` was called with a value here then `listener()` would directly get it.
+Next, `h1` is created from `h0` using the `of()` function. It implies that any event that is emitted by `h1` will be first given to the `increment` function and then the result of that will be given to the `listener`, like this —
+
+```js
+listener(increment(9))
+```
+This kind of nesting can be done any number of times for example —
+
+```js
+const emitter = hoe(console.log)
+  .of(x => x + 1)
+  .of(x => x / 20)
+  .of(x => x * x)
+
+emitter(50) 
 ```
