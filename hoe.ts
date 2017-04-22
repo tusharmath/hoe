@@ -4,36 +4,24 @@
 
 ///<reference path="global.d.ts"/>
 
-interface MapFunction<A, B> {
+export interface MapFunction<A, B> {
   (a: A): B
 }
 
-class DefaultAction<T> implements Action<T> {
-  constructor (public readonly type: string,
-               public readonly value: T) {
-  }
+export interface ListenerFunction<T> {
+  (value: T): void
 }
 
-const resolveEmitter = (fn: MapFunction<any, any>,
-                        parent: Hoe) => {
-  return new DefaultEmitter(fn, parent)
-}
+abstract class BaseEmitter<T> implements Hoe {
 
-const actionFrom = (type: string) => action.bind(null, type)
-
-abstract class BaseEmitter implements Hoe {
-  of (type: string): Hoe {
-    return this.map(actionFrom(type))
+  of<S> (fn: MapFunction<T, S>): Hoe {
+    return new DefaultEmitter(fn, this)
   }
 
-  map<A, B> (fn: MapFunction<A, B>): Hoe {
-    return resolveEmitter(fn, this)
-  }
-
-  abstract emit: EmitFunction
+  abstract emit: ListenerFunction<T>
 }
 
-class DefaultEmitter extends BaseEmitter {
+class DefaultEmitter<T> extends BaseEmitter<T> {
   constructor (private fn: MapFunction<any, any>,
                private parent: Hoe) {
     super()
@@ -44,14 +32,13 @@ class DefaultEmitter extends BaseEmitter {
   }
 }
 
-class RootEmitter extends BaseEmitter {
-  constructor (public readonly emit: EmitFunction) {
+class RootEmitter<T> extends BaseEmitter<T> {
+  constructor (public readonly emit: ListenerFunction<T>) {
     super()
   }
 }
 
-export const hoe = (listener: EmitFunction): Hoe => {
+export const hoe = <T> (listener: ListenerFunction<T>): Hoe => {
   return new RootEmitter(listener)
 }
 
-export const action = <T> (type: string, value: T): Action<T> => new DefaultAction(type, value)

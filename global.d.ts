@@ -7,22 +7,6 @@
  * the type can not be changed at run time.
  */
 interface Hoe {
-  of (type: string): Hoe
-  map <A, B>(fn: (a: A) => B): Hoe
-  emit: EmitFunction
-}
-
-/**
- * Handler for events
- */
-interface EmitFunction {
-  <T> (action: T): void
-}
-
-/**
- * A tuple of value + type.
- */
-interface Action<T> {
-  type: string
-  value: T
+  of <A, B>(fn: (a: A) => B): Hoe
+  emit: <T> (value: T) => void
 }
