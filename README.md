@@ -27,9 +27,9 @@ $ npm install hoe --save
 # Example
 
 ```js
-import {hoe} from 'hoe'
+import * as hoe from 'hoe'
 
-const H = hoe(event => console.log(event)) // Add a listener that logs
+const H = hoe.create(event => console.log(event)) // Add a listener that logs
 
 const a = H.of(x => ({type: 'A', value: x}))
 const b = a.of(x => ({type: 'B', value: x})) // created from 'a'
@@ -85,13 +85,13 @@ This is the constructor function for creating the event emitter. It takes in a s
 
 **Usage**
 ```js
-import {hoe} from 'hoe'
+import * as hoe from 'hoe'
 
 const listener = (event) => {
   // do something with that event
 }
 
-hoe(listener) // returns a Hoe
+hoe.create(listener) // returns a Hoe
 ```
 
 ### of()
@@ -100,7 +100,7 @@ hoe(listener) // returns a Hoe
  The `transformer` function is called with the value that is being emitted by the new instance. For Eg:
 
  ```js
-const h0 = hoe(listener)
+const h0 = hoe.create(listener)
 
 const increment = x => x + 1
 const h1 = h0.of(increment)
@@ -117,7 +117,7 @@ listener(increment(9))
 This kind of nesting can be done any number of times for example —
 
 ```js
-const emitter = hoe(console.log)
+const emitter = hoe.create(console.log)
   .of(x => x + 1)
   .of(x => x / 20)
   .of(x => x * x)
