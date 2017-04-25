@@ -52,7 +52,8 @@ jspm_packages
 .gitignore
 .idea/
 typings/
-*.js
 *.map
 *.d.ts
 !global.d.ts
+*.js
+!config/rollup.config.js
