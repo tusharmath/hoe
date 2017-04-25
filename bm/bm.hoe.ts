@@ -2,23 +2,23 @@
  * Created by tushar on 15/01/17.
  */
 import * as Benchmark from 'benchmark'
-import {hoe} from '../hoe'
+import {create} from '../hoe'
 var suite = new Benchmark.Suite()
 
 function passthru () {
 }
-const fresh = hoe(passthru)
+const fresh = create(passthru)
 console.log('```')
 suite
   .add('emit-1e6-times', function () {
-    const e = hoe(passthru)
+    const e = create(passthru)
     for (var i = 0; i < 1e6; ++i) {
       e.emit(i)
     }
   })
 
   .add('create-1e3-times', function () {
-    var e = hoe(passthru)
+    var e = create(passthru)
 
     for (var i = 0; i < 1e3; ++i) {
       e = e.of(x => [i, x])

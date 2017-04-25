@@ -38,7 +38,6 @@ class RootEmitter<T> extends BaseEmitter<T> {
   }
 }
 
-export const hoe = <T> (listener: ListenerFunction<T>): Hoe => {
+export const create = <T> (listener: ListenerFunction<T>): Hoe => {
   return new RootEmitter(listener)
 }
-
