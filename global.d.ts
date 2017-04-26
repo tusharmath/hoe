@@ -7,6 +7,12 @@
  * the type can not be changed at run time.
  */
 interface Hoe {
-  of <A, B>(fn: (a: A) => B): Hoe
+  of (scope: string, id?: number): Hoe
   emit: <T> (value: T) => void
+}
+
+interface Action<T> {
+  type: string
+  id: number
+  value: T
 }

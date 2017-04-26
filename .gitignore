@@ -57,3 +57,4 @@ typings/
 !global.d.ts
 *.js
 !config/rollup.config.js
+dist/

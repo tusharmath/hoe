@@ -13,7 +13,7 @@ export default {
   entry: './hoe.js',
   dest: './dist/hoe.js',
   format: 'umd',
-  moduleName: 'Hoe',
+  moduleName: 'hoe',
   plugins: [
     minify({comments: false}),
     commonjs({}),
