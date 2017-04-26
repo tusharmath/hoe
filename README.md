@@ -2,18 +2,17 @@
 
 [![Build Status](https://travis-ci.org/tusharmath/hoe.svg?branch=master)](https://travis-ci.org/tusharmath/hoe)
 
-<!--
-understands components
--->
-
-HOE is an action emitter for nested stateless Virtual DOM components. 
+HOE is an emitter for deeply nested components. It does so by internally converting DOM Events into `Actions`. An `Action` has three properties —
+ 
+ - `type` : Its a string identifier which depicts the originator of event. For example — if an event is fired from the side navigation, the corresponding `Action` could have a `type` as `SIDE_NAV`.  
+ - `value`: Value is the payload that needs to be transmitted via the `Action`. In most cases it would be the DOM event. In some cases the value it self could be an `Action`. This is especially useful when the nesting of components is really deep and one would like to namespace actions based on the hierarchy of components. 
+ - `id`: It's an optional value and defaults to `0`. Sometimes multiple instance of the same `type` of the component need to be used. Example — When you have to dynamically create a list of components. `id` helps differentiate in such cases.
 
 # Table of Contents
-
 - [Installation](#installation)
 - [Usage](#usage)
 - [Example](#example)
-- [API](#api)
+- [API](#api) 
 
 # Installation
 
@@ -41,11 +40,13 @@ const emitter = hoe.create(i => console.log(i))
 
 # Example
 
-- [Working Demo on Code Pen]()
+![JS Fiddle](http://res.cloudinary.com/tusharmath/image/upload/t_media_lib_thumb/v1493232573/Screen_Shot_2017-04-27_at_12.16.46_AM_qerizr.png "Sample")
+
+[Working Demo with Preact](https://jsfiddle.net/pfc9r2o7/7/)
 
 # API
 
-### function: hoe()
+## hoe(listener)
 
 This is the constructor function for creating the action emitter. It takes in a single listener and returns an instance of `Hoe`.
 
@@ -60,7 +61,7 @@ const listener = (event) => {
 hoe.create(listener) // returns a Hoe
 ```
 
-### of(type, id)
+## of(type, id)
 
 It takes in two arguments a `type` which is a `string` and an `id` which is a `number`. The `id` is optional and defaults to `0`. The function returns a new instance of `Hoe`. For Eg:
 
@@ -71,6 +72,6 @@ const h0 = hoe.create(listener)
 const h1 = h0.of('A').of('B', 10).of('C')
 ```
 
-### emit(value)
+## emit(value)
 
-It is available on `Hoe` instances. It takes in any value and based on the `type` and the `id` dispatches an action. 
+It is available on `Hoe` instances. It takes in any value and based on the `type` and the `id` dispatches an action.
