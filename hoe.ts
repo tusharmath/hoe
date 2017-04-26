@@ -4,31 +4,33 @@
 
 ///<reference path="global.d.ts"/>
 
-export interface MapFunction<A, B> {
-  (a: A): B
-}
-
 export interface ListenerFunction<T> {
   (value: T): void
 }
 
-abstract class BaseEmitter<T> implements Hoe {
+class DAction<T> {
+  constructor (public readonly type: string,
+               public readonly value: T,
+               public readonly id: number) {}
+}
 
-  of<S> (fn: MapFunction<T, S>): Hoe {
-    return new DefaultEmitter(fn, this)
+abstract class BaseEmitter<T> implements Hoe {
+  of (type: string, id: number): Hoe {
+    return new DefaultEmitter(type, id, this)
   }
 
   abstract emit: ListenerFunction<T>
 }
 
 class DefaultEmitter<T> extends BaseEmitter<T> {
-  constructor (private fn: MapFunction<any, any>,
+  constructor (private type: string,
+               private id: number,
                private parent: Hoe) {
     super()
   }
 
   emit = <A> (value: A) => {
-    return this.parent.emit(this.fn(value))
+    return this.parent.emit(action(this.type, value, this.id))
   }
 }
 
@@ -41,3 +43,6 @@ class RootEmitter<T> extends BaseEmitter<T> {
 export const create = <T> (listener: ListenerFunction<T>): Hoe => {
   return new RootEmitter(listener)
 }
+export const action = <T> (type: string, value: T, id: number = 0): Action<T> => new DAction(
+  type, value, id
+)

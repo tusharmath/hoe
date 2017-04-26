@@ -21,7 +21,7 @@ suite
     var e = create(passthru)
 
     for (var i = 0; i < 1e3; ++i) {
-      e = e.of(x => [i, x])
+      e = e.of(i.toString())
     }
     e.emit(0)
   })
@@ -29,7 +29,7 @@ suite
   .add('create-1e3-times-fresh', function () {
     var e = fresh
     for (var i = 0; i < 1e3; ++i) {
-      e = e.of(x => [i, x])
+      e = e.of(i.toString())
     }
     e.emit(0)
   })
