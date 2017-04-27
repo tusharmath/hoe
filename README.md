@@ -40,9 +40,8 @@ const emitter = hoe.create(i => console.log(i))
 
 # Example
 
-![JS Fiddle](http://res.cloudinary.com/tusharmath/image/upload/t_media_lib_thumb/v1493232573/Screen_Shot_2017-04-27_at_12.16.46_AM_qerizr.png "Sample")
-
-[Working Demo with Preact](https://jsfiddle.net/pfc9r2o7/7/)
+- [Deeply nested views](https://jsfiddle.net/9mmLu22n/)
+- [Dynamically created counters](https://jsfiddle.net/pfc9r2o7/8/)
 
 # API
 
