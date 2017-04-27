@@ -41,7 +41,7 @@ const emitter = hoe.create(i => console.log(i))
 # Example
 
 - [Deeply nested views](https://jsfiddle.net/9mmLu22n/)
-- [Dynamically created counters](https://jsfiddle.net/pfc9r2o7/8/)
+- [Dynamically created counters](https://jsfiddle.net/pfc9r2o7/9/)
 
 # API
 
