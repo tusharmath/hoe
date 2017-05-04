@@ -72,7 +72,7 @@ HOE converts DOM Events into an `Action`. An `Action` has three properties —
 # Example
 
 - [Deeply nested components](https://jsfiddle.net/9mmLu22n/)
-- [Dynamically created stateful components](https://jsfiddle.net/pfc9r2o7/9/)
+- [Dynamically created stateful components](https://jsfiddle.net/pfc9r2o7/10/)
 
 # API
 
