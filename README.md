@@ -53,20 +53,19 @@ On clicking on buttons, the `actionListener` logs the following `Action`s —
 
 ```js
 // Hello
-{type: 'hello', id: 0, value: [ClickEvent]}
+{type: 'hello', value: [ClickEvent]}
 
 // Bye
-{type: 'bye', id: 0, value: [ClickEvent]}
+{type: 'bye', value: [ClickEvent]}
 ```
 
 The `value` in this case is the actual click event.
 
 # Action
-HOE converts DOM Events into an `Action`. An `Action` has three properties —
+HOE converts DOM Events into an `Action`. An `Action` has two properties —
 
- - `type` : Its a string identifier which depicts the originator of event. For example — if an event is fired from the side navigation, the corresponding `Action` could have a `type` as `SIDE_NAV`.
+ - `type` : Its a `string|number` identifier which depicts the originator of event. For example — if an event is fired from the side navigation, the corresponding `Action` could have a `type` as `SIDE_NAV`.
  - `value`: Value is the payload that needs to be transmitted via the `Action`. In most cases it would be the DOM event. In some cases the value it self could be an `Action`. This is especially useful when the nesting of components is really deep and one would like to namespace actions based on the hierarchy of components.
- - `id`: It's an optional value and defaults to `0`. Sometimes multiple instance of the same `type` of the component need to be used. Example — When you have to dynamically create a list of components. `id` helps differentiate in such cases.
 
 
 # Example
@@ -91,17 +90,17 @@ const actionListener = (event) => {
 const emitter = hoe.create(actionListener) // returns a Hoe
 ```
 
-## emitter.of(type, id)
+## emitter.of(type)
 
-It takes in two arguments a `type` which is a `string` and an `id` which is a `number`. The `id` is optional and defaults to `0`. The function returns a new instance of `Hoe`. For Eg:
+It takes in a `type` which is of type `string|number` and returns a new instance of `Hoe`. For Eg:
 
 ```js
 import * as hoe from 'hoe'
 
 const h0 = hoe.create(listener)
-const h1 = h0.of('A').of('B', 10).of('C')
+const h1 = h0.of('A').of('B').of('C')
 ```
 
 ## emitter.emit(value)
 
-It is available on `Hoe` instances. It takes in any value and based on the `type` and the `id` dispatches an action.
+It is available on all `Hoe` instances. It takes in any `value` and based on the `type` it dispatches an `action`.
