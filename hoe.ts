@@ -9,28 +9,24 @@ export interface ListenerFunction<T> {
 }
 
 class DAction<T> {
-  constructor (public readonly type: string,
-               public readonly value: T,
-               public readonly id: number) {}
+  constructor (public readonly type: ActionType, public readonly value: T) {}
 }
 
 abstract class BaseEmitter<T> implements Hoe {
-  of (type: string, id: number): Hoe {
-    return new DefaultEmitter(type, id, this)
+  of (type: ActionType): Hoe {
+    return new DefaultEmitter(type, this)
   }
 
   abstract emit: ListenerFunction<T>
 }
 
 class DefaultEmitter<T> extends BaseEmitter<T> {
-  constructor (private type: string,
-               private id: number,
-               private parent: Hoe) {
+  constructor (private type: ActionType, private parent: Hoe) {
     super()
   }
 
   emit = <A> (value: A) => {
-    return this.parent.emit(action(this.type, value, this.id))
+    return this.parent.emit(action(this.type, value))
   }
 }
 
@@ -43,6 +39,6 @@ class RootEmitter<T> extends BaseEmitter<T> {
 export const create = <T> (listener: ListenerFunction<T>): Hoe => {
   return new RootEmitter(listener)
 }
-export const action = <T> (type: string, value: T, id: number = 0): Action<T> => new DAction(
-  type, value, id
+export const action = <T> (type: ActionType, value: T): Action<T> => new DAction(
+  type, value
 )

@@ -42,17 +42,6 @@ test('of(A).of(B)', t => {
   ])
 })
 
-test('of(A).of(B, 10)', t => {
-  const {actions, listener} = testListener()
-  const e = create(listener).of('A').of('B', 10)
-  e.emit(100)
-  e.emit(200)
-  t.deepEqual(actions, [
-    action('A', action('B', 100, 10)),
-    action('A', action('B', 200, 10))
-  ])
-})
-
 test('emit.bind()', t => {
   const {actions, listener} = testListener()
   const e = create(listener)
