@@ -1,5 +1,7 @@
 # HOE - Higher Order Events
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/tusharmath/hoe.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/tusharmath/hoe.svg?branch=master)](https://travis-ci.org/tusharmath/hoe)
 
 HOE is an event handler especially designed keeping virtual dom libraries in mind.
