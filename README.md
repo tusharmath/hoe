@@ -106,3 +106,7 @@ const h1 = h0.of('A').of('B').of('C')
 ## emitter.emit(value)
 
 It is available on all `Hoe` instances. It takes in any `value` and based on the `type` it dispatches an `action`.
+
+## hoe.isAction(anything)
+
+Checks if the given value is an `action` or not.
