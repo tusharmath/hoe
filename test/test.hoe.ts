@@ -2,7 +2,7 @@
  * Created by tushar on 15/01/17.
  */
 import test from 'ava'
-import {create, action} from '../hoe'
+import {create, action, isAction} from '../hoe'
 
 export const testListener = () => {
   const actions: Array<any> = []
@@ -52,4 +52,9 @@ test('emit.bind()', t => {
     100,
     action('F', 200)
   ])
+})
+
+test('isAction()', t => {
+  t.false(isAction({}))
+  t.true(isAction(action('A', 'B')))
 })
