@@ -8,14 +8,16 @@ notifications:
 node_js:
   - '7'
   - '10'
+  - 'stable'
 before_install:
-  - npm i -g commentator typings
-  - typings install
+  - yarn global add greenkeeper-lockfile@1
 before_script:
+  - greenkeeper-lockfile-update
   - npm prune
-  - npm run benchmark | commentator
 after_success:
   - npm run semantic-release
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
+after_script:
+  - greenkeeper-lockfile-upload

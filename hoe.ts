@@ -42,4 +42,4 @@ export const create = <T>(listener: ListenerFunction<T>): Hoe => {
 export const action = <T>(type: ActionType, value: T): Action<T> =>
   new DAction(type, value)
 
-export const isAction = (val: any) => val instanceof DAction
+export const isAction = (val: any): val is Action<any> => val instanceof DAction
