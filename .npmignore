@@ -1,5 +1,15 @@
 # Created by .ignore support plugin (hsz.mobi)
 
+*.ts
 !*.js
 !*.d.ts
-!*.js.map
+*.js.map
+test/
+bm/
+.idea/
+*.yml
+*.tgz
+typings/
+config/
+*.md/
+tsconfig.json
