@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/tusharmath/hoe#readme",
   "devDependencies": {
+    "@types/benchmark": "^1.0.31",
     "ava": "^0.20.0",
     "benchmark": "^2.1.3",
     "cz-conventional-changelog": "^2.0.0",
