@@ -108,6 +108,12 @@ acorn@^5.2.1:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.1.tgz#f095829297706a7c9776958c0afc8930a9b9d9d8"
 
+action-type@^1.0.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/action-type/-/action-type-1.1.1.tgz#d142c18034d7330a2dde495c6399f1ec42ac5f3d"
+  dependencies:
+    ts-curry "^1.0.0"
+
 agent-base@2:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-2.1.1.tgz#d6de10d5af6132d5bd692427d46fc538539094c7"
@@ -4007,6 +4013,10 @@ trim-off-newlines@^1.0.0, trim-off-newlines@^1.0.1:
 trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
+
+ts-curry@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ts-curry/-/ts-curry-1.0.0.tgz#512c9ddee5714b8a9b34b8d7ea214cbdbd0921af"
 
 tunnel-agent@^0.6.0:
   version "0.6.0"

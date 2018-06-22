@@ -2,44 +2,32 @@
  * Created by tushar on 15/01/17.
  */
 
-///<reference path="global.d.ts"/>
+import { action } from 'action-type'
 
-export interface ListenerFunction<T> {
-  (value: T): void
+export interface Hoe {
+  of(type: string | number): Hoe
+  emit(obj: any): void
 }
 
-class DAction<T> {
-  constructor(public readonly type: ActionType, public readonly value: T) {}
-}
+class DefaultEmitter implements Hoe {
+  constructor(private type: string | number, private parent: Hoe) {}
 
-abstract class BaseEmitter<T> implements Hoe {
-  of(type: ActionType): Hoe {
-    return new DefaultEmitter(type, this)
-  }
-
-  abstract emit: ListenerFunction<T>
-}
-
-class DefaultEmitter<T> extends BaseEmitter<T> {
-  constructor(private type: ActionType, private parent: Hoe) {
-    super()
-  }
-
-  emit = <A>(value: A) => {
+  emit = (value: any) => {
     return this.parent.emit(action(this.type, value))
   }
-}
-
-class RootEmitter<T> extends BaseEmitter<T> {
-  constructor(public readonly emit: ListenerFunction<T>) {
-    super()
+  of(type: string | number): Hoe {
+    return new DefaultEmitter(type, this)
   }
 }
 
-export const create = <T>(listener: ListenerFunction<T>): Hoe => {
+class RootEmitter implements Hoe {
+  constructor(public readonly emit: (obj: any) => void) {}
+
+  of(type: string | number): Hoe {
+    return new DefaultEmitter(type, this)
+  }
+}
+
+export const create = <V>(listener: (obj: V) => V): Hoe => {
   return new RootEmitter(listener)
 }
-export const action = <T>(type: ActionType, value: T): Action<T> =>
-  new DAction(type, value)
-
-export const isAction = (val: any): val is Action<any> => val instanceof DAction

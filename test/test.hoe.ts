@@ -2,18 +2,19 @@
  * Created by tushar on 15/01/17.
  */
 import test from 'ava'
-import {create, action, isAction} from '../hoe'
+import { action } from 'action-type'
+import { create } from '../hoe'
 
 export const testListener = () => {
   const actions: Array<any> = []
   const listener = (action: any) => {
     actions.push(action)
   }
-  return {actions, listener}
+  return { actions, listener }
 }
 
 test(t => {
-  const {actions, listener} = testListener()
+  const { actions, listener } = testListener()
   const e = create(listener)
   e.emit(100)
   e.emit(200)
@@ -21,19 +22,18 @@ test(t => {
 })
 
 test('of()', t => {
-  const {actions, listener} = testListener()
+  const { actions, listener } = testListener()
   const e = create(listener).of('T')
   e.emit(100)
   e.emit(200)
-  t.deepEqual(actions, [
-    action('T', 100),
-    action('T', 200)
-  ])
+  t.deepEqual(actions, [action('T', 100), action('T', 200)])
 })
 
 test('of(A).of(B)', t => {
-  const {actions, listener} = testListener()
-  const e = create(listener).of('A').of('B')
+  const { actions, listener } = testListener()
+  const e = create(listener)
+    .of('A')
+    .of('B')
   e.emit(100)
   e.emit(200)
   t.deepEqual(actions, [
@@ -43,18 +43,10 @@ test('of(A).of(B)', t => {
 })
 
 test('emit.bind()', t => {
-  const {actions, listener} = testListener()
+  const { actions, listener } = testListener()
   const e = create(listener)
   const f = e.of('F')
   e.emit.call(null, 100)
   f.emit.call(null, 200)
-  t.deepEqual(actions, [
-    100,
-    action('F', 200)
-  ])
-})
-
-test('isAction()', t => {
-  t.false(isAction({}))
-  t.true(isAction(action('A', 'B')))
+  t.deepEqual(actions, [100, action('F', 200)])
 })
