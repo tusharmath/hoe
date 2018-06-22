@@ -100,6 +100,12 @@ acorn@^4.0.1:
   version "4.0.11"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.11.tgz#edcda3bd937e7556410d42ed5860f67399c794c0"
 
+action-type@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/action-type/-/action-type-1.0.0.tgz#af7c42caafc0c98a57ccdbb9b5dd717aa7716096"
+  dependencies:
+    ts-curry "^1.0.0"
+
 agent-base@2:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-2.0.1.tgz#bd8f9e86a8eb221fffa07bd14befd55df142815e"
@@ -3531,11 +3537,9 @@ rollup-pluginutils@^2.0.1:
     estree-walker "^0.3.0"
     micromatch "^2.3.11"
 
-rollup@^0.42.0:
-  version "0.42.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.42.0.tgz#56e791b3a2f3dd7190bbb80a375675f2fe0f9b23"
-  dependencies:
-    source-map-support "^0.4.0"
+rollup@^0.46.0:
+  version "0.46.3"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.46.3.tgz#40b408a202b2273ba0318e9672c51290fe33ea11"
 
 run-auto@^2.0.0:
   version "2.0.0"
@@ -3929,6 +3933,10 @@ trim-off-newlines@^1.0.0, trim-off-newlines@^1.0.1:
 trim-right@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
+
+ts-curry@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ts-curry/-/ts-curry-1.0.0.tgz#512c9ddee5714b8a9b34b8d7ea214cbdbd0921af"
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
