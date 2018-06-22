@@ -7,13 +7,6 @@
  * the type can not be changed at run time.
  */
 interface Hoe {
-  of (type: ActionType): Hoe
-  emit: <T> (value: T) => void
+  of(type: string | number): Hoe
+  emit: <T>(value: T) => void
 }
-
-interface Action<T> {
-  type: string | number
-  value: T
-}
-
-type ActionType = string | number

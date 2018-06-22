@@ -2,26 +2,22 @@
  * Created by tushar on 15/01/17.
  */
 
-///<reference path="global.d.ts"/>
+import { action } from 'action-type'
 
 export interface ListenerFunction<T> {
   (value: T): void
 }
 
-class DAction<T> {
-  constructor(public readonly type: ActionType, public readonly value: T) {}
-}
-
 abstract class BaseEmitter<T> implements Hoe {
-  of(type: ActionType): Hoe {
+  of(type: string | number): Hoe {
     return new DefaultEmitter(type, this)
   }
 
-  abstract emit: ListenerFunction<T>
+  abstract emit: { (value: T): void }
 }
 
 class DefaultEmitter<T> extends BaseEmitter<T> {
-  constructor(private type: ActionType, private parent: Hoe) {
+  constructor(private type: string | number, private parent: Hoe) {
     super()
   }
 
@@ -39,7 +35,3 @@ class RootEmitter<T> extends BaseEmitter<T> {
 export const create = <T>(listener: ListenerFunction<T>): Hoe => {
   return new RootEmitter(listener)
 }
-export const action = <T>(type: ActionType, value: T): Action<T> =>
-  new DAction(type, value)
-
-export const isAction = (val: any): val is Action<any> => val instanceof DAction
