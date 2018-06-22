@@ -12,6 +12,7 @@ before_install:
 script:
   - yarn
   - yarn tsc
+  - yarn test
 before_script:
   - greenkeeper-lockfile-update
   - npm prune
