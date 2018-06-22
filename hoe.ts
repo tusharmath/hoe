@@ -1,13 +1,10 @@
+/// <reference path="global.d.ts" />
+
 /**
  * Created by tushar on 15/01/17.
  */
 
 import { action } from 'action-type'
-
-export interface Hoe {
-  of(type: string | number): Hoe
-  emit(obj: any): void
-}
 
 class DefaultEmitter implements Hoe {
   constructor(private type: string | number, private parent: Hoe) {}
