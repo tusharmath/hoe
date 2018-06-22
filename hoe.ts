@@ -1,37 +1,30 @@
+/// <reference path="global.d.ts" />
+
 /**
  * Created by tushar on 15/01/17.
  */
 
 import { action } from 'action-type'
 
-export interface ListenerFunction<T> {
-  (value: T): void
-}
+class DefaultEmitter implements Hoe {
+  constructor(private type: string | number, private parent: Hoe) {}
 
-abstract class BaseEmitter<T> implements Hoe {
+  emit = (value: any) => {
+    return this.parent.emit(action(this.type, value))
+  }
   of(type: string | number): Hoe {
     return new DefaultEmitter(type, this)
   }
-
-  abstract emit: { (value: T): void }
 }
 
-class DefaultEmitter<T> extends BaseEmitter<T> {
-  constructor(private type: string | number, private parent: Hoe) {
-    super()
-  }
+class RootEmitter implements Hoe {
+  constructor(public readonly emit: (obj: any) => void) {}
 
-  emit = <A>(value: A) => {
-    return this.parent.emit(action(this.type, value))
+  of(type: string | number): Hoe {
+    return new DefaultEmitter(type, this)
   }
 }
 
-class RootEmitter<T> extends BaseEmitter<T> {
-  constructor(public readonly emit: ListenerFunction<T>) {
-    super()
-  }
-}
-
-export const create = <T>(listener: ListenerFunction<T>): Hoe => {
+export const create = <V>(listener: (obj: V) => V): Hoe => {
   return new RootEmitter(listener)
 }

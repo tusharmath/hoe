@@ -5,6 +5,7 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "noUnusedLocals": true,
-    "declaration": false
+    "declaration": false,
+    "strict": true
   }
 }
