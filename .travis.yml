@@ -9,6 +9,9 @@ node_js:
   - 'stable'
 before_install:
   - yarn global add greenkeeper-lockfile@1
+script:
+  - yarn
+  - yarn tsc
 before_script:
   - greenkeeper-lockfile-update
   - npm prune
