@@ -6,7 +6,6 @@ import {create} from '../hoe'
 var suite = new Benchmark.Suite()
 
 function pass() {}
-const fresh = create(pass)
 console.log('```')
 suite
 
