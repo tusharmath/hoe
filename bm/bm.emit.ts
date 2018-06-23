@@ -6,7 +6,6 @@ import {create} from '../hoe'
 var suite = new Benchmark.Suite()
 
 function pass() {}
-console.log('```')
 suite
   .add('emit-1e6-times', function() {
     const e = create(pass)
@@ -17,5 +16,4 @@ suite
   .on('cycle', function(event: any) {
     console.log(String(event.target))
   })
-  .on('complete', () => console.log('```'))
   .run()

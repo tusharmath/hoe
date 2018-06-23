@@ -7,7 +7,6 @@ var suite = new Benchmark.Suite()
 
 function pass() {}
 const fresh = create(pass)
-console.log('```')
 suite
   .add('create-1e3-times-fresh', function() {
     var e = fresh
@@ -20,5 +19,5 @@ suite
   .on('cycle', function(event: any) {
     console.log(String(event.target))
   })
-  .on('complete', () => console.log('```'))
+
   .run()
