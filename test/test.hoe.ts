@@ -2,19 +2,19 @@
  * Created by tushar on 15/01/17.
  */
 import test from 'ava'
-import { action } from 'action-type'
-import { create } from '../hoe'
+import {action} from 'action-type'
+import {create} from '../hoe'
 
 export const testListener = () => {
   const actions: Array<any> = []
   const listener = (action: any) => {
     actions.push(action)
   }
-  return { actions, listener }
+  return {actions, listener}
 }
 
 test(t => {
-  const { actions, listener } = testListener()
+  const {actions, listener} = testListener()
   const e = create(listener)
   e.emit(100)
   e.emit(200)
@@ -22,7 +22,7 @@ test(t => {
 })
 
 test('of()', t => {
-  const { actions, listener } = testListener()
+  const {actions, listener} = testListener()
   const e = create(listener).of('T')
   e.emit(100)
   e.emit(200)
@@ -30,7 +30,7 @@ test('of()', t => {
 })
 
 test('of(A).of(B)', t => {
-  const { actions, listener } = testListener()
+  const {actions, listener} = testListener()
   const e = create(listener)
     .of('A')
     .of('B')
@@ -43,7 +43,7 @@ test('of(A).of(B)', t => {
 })
 
 test('emit.bind()', t => {
-  const { actions, listener } = testListener()
+  const {actions, listener} = testListener()
   const e = create(listener)
   const f = e.of('F')
   e.emit.call(null, 100)

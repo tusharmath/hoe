@@ -4,7 +4,7 @@
  * Created by tushar on 15/01/17.
  */
 
-import { action } from 'action-type'
+import {action} from 'action-type'
 
 class DefaultEmitter implements Hoe {
   constructor(private type: string | number, private parent: Hoe) {}
