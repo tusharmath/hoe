@@ -64,7 +64,7 @@ On clicking on buttons, the `actionListener` logs the following `Action`s —
 The `value` in this case is the actual click event.
 
 # Action
-HOE converts DOM Events into an `Action`. An `Action` has two properties —
+HOE converts DOM Events into an [Action Type](https://github.com/tusharmath/action-type). An `Action` has two properties —
 
  - `type` : Its a `string|number` identifier which depicts the originator of event. For example — if an event is fired from the side navigation, the corresponding `Action` could have a `type` as `SIDE_NAV`.
  - `value`: Value is the payload that needs to be transmitted via the `Action`. In most cases it would be the DOM event. In some cases the value it self could be an `Action`. This is especially useful when the nesting of components is really deep and one would like to namespace actions based on the hierarchy of components.
