@@ -7,10 +7,19 @@
 import {action} from 'action-type'
 
 class DefaultEmitter implements Hoe {
-  constructor(private type: string | number, private parent: Hoe) {}
+  constructor(
+    readonly type: string | number,
+    readonly parent: DefaultEmitter | RootEmitter
+  ) {}
 
   emit = (value: any) => {
-    return this.parent.emit(action(this.type, value))
+    var node: DefaultEmitter | RootEmitter = this
+    var act = value
+    while (node instanceof DefaultEmitter) {
+      act = action(node.type, act)
+      node = node.parent
+    }
+    node.emit(act)
   }
   of(type: string | number): Hoe {
     return new DefaultEmitter(type, this)

@@ -50,3 +50,14 @@ test('emit.bind()', t => {
   f.emit.call(null, 200)
   t.deepEqual(actions, [100, action('F', 200)])
 })
+
+test('stack safety', t => {
+  const {listener} = testListener()
+  let e = create(listener)
+  t.notThrows(() => {
+    for (var i = 0; i < 1e6; i++) {
+      e = e.of(i.toString())
+    }
+    e.emit(null)
+  })
+})
