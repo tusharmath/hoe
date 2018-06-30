@@ -51,6 +51,6 @@
     }
   },
   "dependencies": {
-    "action-type": "^1.0.0"
+    "action-type": "^2.0.0"
   }
 }
