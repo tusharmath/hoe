@@ -104,9 +104,9 @@ abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
 
-action-type@^1.0.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/action-type/-/action-type-1.1.1.tgz#d142c18034d7330a2dde495c6399f1ec42ac5f3d"
+action-type@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/action-type/-/action-type-3.0.0.tgz#af3d84b9a52ec7fa7207c404c819eb793fa3ddb9"
   dependencies:
     ts-curry "^1.0.0"
 
