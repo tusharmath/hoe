@@ -7,10 +7,11 @@
     "prepublishOnly": "tsc -d && yarn build",
     "test": "ava",
     "test:watch": "ava --watch",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "semantic-release": "semantic-release",
     "benchmark": "node bm/bm.hoe.js",
     "build": "rollup hoe.js --config config/rollup.config.js",
-    "prettier": "prettier **/*.ts --write"
+    "prettier": "prettier **/*.ts --write",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "repository": {
     "type": "git",
@@ -43,7 +44,8 @@
     "rollup-plugin-babili": "^3.0.0",
     "rollup-plugin-commonjs": "^9.0.0",
     "semantic-release": "^15.6.0",
-    "typescript": "^2.1.5"
+    "typescript": "^2.1.5",
+    "travis-deploy-once": "^5.0.1"
   },
   "config": {
     "commitizen": {
