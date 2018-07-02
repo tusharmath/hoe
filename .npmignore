@@ -13,3 +13,4 @@ typings/
 config/
 *.md/
 tsconfig.json
+.prettierrc
