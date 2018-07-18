@@ -55,6 +55,6 @@
     }
   },
   "dependencies": {
-    "action-type": "^3.1.1"
+    "action-type": "^4.0.0"
   }
 }
